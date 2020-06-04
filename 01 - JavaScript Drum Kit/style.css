@@ -1,7 +1,8 @@
 html {
   font-size: 10px;
-  background: url(https://i.imgur.com/b9r5sEL.jpg) bottom center;
+  background: url('./img/drum-background.jpg');
   background-size: cover;
+  background-position: center;
 }
 
 body,html {
