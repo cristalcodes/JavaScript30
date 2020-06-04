@@ -60,23 +60,49 @@
 <script>
 
   function playSound(e) {
+    // the function playSound takes in an event 'e'
     const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+    // we create a constant variable called audio and assign it to the corresponding audio file by using .querySelector to find the audio file with a matching data-key.
+    // We use string interpolation (${}) to use the event's(keydown) keyCode.
     const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+    // we create a constant variable called 'key' and assign it to the corresponding div by using the class of the div (.key)
+    // we again use string interpolation to use the event's keydown keyCode.
+
+    // so now when we push a key, we have both the audio file we want to play, and the div that needs to change in color and elevation.
+
     if(!audio) return;
+    // we use the 'if' conditional to say 'if there is no audio, return'.
+    // if a key is pressed that is NOT associated with an audio file in our html, the return keyword will 'kick us out' of the function, and nothing else will happen.
     audio.currentTime = 0;
+    // here we are setting the audio's current time to zero so that it starts at the beginning EVERY TIME it's key is pressed.
     audio.play();
+    // now we are calling the play function on that audio, and a sound is played. YAY!
     key.classList.add('playing');
+    // and now to the key's classList we add the class 'playing'
+    // this will trigger the CSS for the class .playing
+    // the div will transition and scale up in size, the border color and box shadow will change
   }
 
+  // Now that we've gotten it to play the sound and change, we want it to reset, or go back to what it looked like before.
+
+
   function removeTransition(e) {
+    //the function removeTransition takes in an event 'e'
     if(e.propertyName !== 'transform') return;
+    // we use the if conditional to say 'if the event's propertyName does not deeply equal 'transform', return' (in other words, exit the function)
+    // if we didn't exit the function, we move to the next line
     this.classList.remove('playing');
+    // this (refers to what the event is attached to, in this case the key) will have the 'playing' class removed from the classList
+    // so now in the css it goes back to just being .key, and the css returns to its initial state
   }
 
   const keys = document.querySelectorAll('.key');
+  // sets a constant variable named keys and assigns it to ALL of the divs with a class of 'key'
   keys.forEach(key => key.addEventListener('transitionend', removeTransition));
-
+  // here we take our collection of keys and go through each one, adding event listeners as we go. The event listener listens for the transition to end 'transitionend',
+  // and then invokes the callback function 'removeTransition'
   window.addEventListener('keydown', playSound);
+  //finally, we add an event listener to the browser window that waits for a keydown event. When it 'hears' one, it plays the sound, and triggers the cascade of events above! 
 </script>
 
 
